@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from src.logger import setup_logging
 from src.parser.oddscorp_arbs import get_surebet_pari
 
 
@@ -6,16 +7,7 @@ app = FastAPI(
     title="BetsService"
 )
 
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
-
+logger = setup_logging()
 
 @app.get("/arbs/")
 async def get_arb():
