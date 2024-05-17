@@ -16,9 +16,9 @@ app = FastAPI(
 
 logger = setup_logging()
 
-async def get_surebettest():
-    # Здесь будет ваш код для получения данных surebet
-    return "result", "bet_type", "link", 1.5, 2.5, "bet_id", "mirror_res", "match_name"
+# async def get_surebettest():
+#     # Здесь будет ваш код для получения данных surebet
+#     return "result", "bet_type", "link", 1.5, 2.5, "bet_id", "mirror_res", "match_name"
 
 
 @app.on_event("startup")
@@ -28,7 +28,7 @@ async def startup_event():
 
 async def cache_arbs():
     while True:
-        result, bet_type, link, koef, koef2, bet_id, mirror_res, match_name = await get_surebettest()
+        result, bet_type, link, koef, koef2, bet_id, mirror_res, match_name = await get_surebet()
         logger.info(f"Data: {result, bet_type, link, koef, koef2, bet_id, mirror_res, match_name}")
 
         data = {
@@ -42,7 +42,7 @@ async def cache_arbs():
             "match_name": match_name
         }
 
-        #rd.hset("last_arb", mapping=data)
+        rd.hset("last_arb", mapping=data)
 
         await asyncio.sleep(3)
 
