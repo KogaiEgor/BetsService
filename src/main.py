@@ -15,7 +15,7 @@ async def startup_event():
     while True:
         result, bet_type, link, koef, koef2, bet_id, mirror_res, match_name = await get_surebet()
         logger.info(f"Data: {result, bet_type, link, koef, koef2, bet_id, mirror_res, match_name}")
-        await asyncio.sleep(5)
+        await asyncio.sleep(3)
 
 
 @app.get("/arbs/")

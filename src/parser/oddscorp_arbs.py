@@ -17,7 +17,7 @@ async def get_surebet_pari(sport):
         'token': odd_token,
         'sport': sport,
         'bk2_name': 'bet365,parimatch_com',
-        'min_fi': 4
+        'min_fi': 0
     }
 
     url = 'http://api.oddscp.com:8111/forks'
@@ -67,39 +67,37 @@ async def parse_surebet(json_data):
     for match in json_data:
         if "Esports" in match["BK1_game"] and "8 mins" in match["BK1_league"]:
             logger.debug(f"Get Esports data BK1: {json.dumps(json_data, indent=3)}")
-            koef1 = match["BK1_cf"]
-            koef2 = match["BK2_cf"]
-            logger.debug(f"bet365: {koef1} pari: {koef2}")
-            arb = calculate_arb(koef1, koef2)
-            if arb >= 0.04:
-                match_name = match['BK1_game']
-                bet_id = match['BK2_event_id']
-                link = await create_link(match["BK1_market_meta"], match["BK1_href"])
-                result = match["BK1_bet"]
-                mirror_res = match["BK2_bet"]
-                bet_type = match["bet_type"]
-                koef = match["BK1_cf"]
-                logger.debug(f"Get match data {result, bet_type, link, koef}")
-                return result, bet_type, link, koef, koef2, bet_id, mirror_res, match_name
+            match_data = await process_match(match, "BK1", "BK2")
+            if match_data:
+                return match_data
         elif "Esports" in match["BK2_game"] and "8 mins" in match["BK2_league"]:
             logger.debug(f"Get Esports data BK2: {json.dumps(json_data, indent=3)}")
-            koef1 = match["BK2_cf"]
-            koef2 = match["BK1_cf"]
-            logger.debug(f"bet365: {koef1} pari: {koef2}")
-            arb = calculate_arb(koef1, koef2)
-            if arb >= 0.04:
-                match_name = match['BK2_game']
-                bet_id = match['BK1_event_id']
-                link = await create_link(match["BK2_market_meta"], match["BK2_href"])
-                result = match["BK2_bet"]
-                mirror_res = match["BK1_bet"]
-                bet_type = match["bet_type"]
-                koef = match["BK2_cf"]
-                logger.debug(f"Get match data {result, bet_type, link, koef}")
-                return result, bet_type, link, koef, koef2, bet_id, mirror_res, match_name
+            match_data = await process_match(match, "BK2", "BK1")
+            if match_data:
+                return match_data
 
     logger.debug("No arbs more than 4% or no value on pari")
     return None
+
+
+async def process_match(match, bk1, bk2):
+    logger.debug(f"Get Esports data {bk1}: {json.dumps(match, indent=3)}")
+    koef1 = match[f"{bk1}_cf"]
+    koef2 = match[f"{bk2}_cf"]
+    logger.debug(f"bet365: {koef1} pari: {koef2}")
+    arb = calculate_arb(koef1, koef2)
+    if arb >= 0.01:
+        match_name = match[f'{bk1}_game']
+        bet_id = match[f'{bk2}_event_id']
+        link = await create_link(match[f"{bk1}_market_meta"], match[f"{bk1}_href"])
+        result = match[f"{bk1}_bet"]
+        mirror_res = match[f"{bk2}_bet"]
+        bet_type = match["bet_type"]
+        koef = match[f"{bk1}_cf"]
+        logger.debug(f"Get match data {result, bet_type, link, koef}")
+        return result, bet_type, link, koef, koef2, bet_id, mirror_res, match_name
+    return None
+
 
 async def get_surebet():
     """
@@ -107,6 +105,7 @@ async def get_surebet():
     :return:
     """
     json_data = await get_surebet_pari("soccer")
+
     while json_data is None:
         logger.error(f"Error occurred trying get data from odd")
         time.sleep(3)
@@ -115,5 +114,5 @@ async def get_surebet():
     while bet == None:
         time.sleep(2)
         bet = await parse_surebet(json_data)
-        json_data = get_surebet_pari("soccer")
+        json_data = await get_surebet_pari("soccer")
     return bet
