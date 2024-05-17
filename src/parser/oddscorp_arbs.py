@@ -112,7 +112,7 @@ async def get_surebet():
         json_data = await get_surebet_pari("soccer")
     bet = await parse_surebet(json_data)
     while bet == None:
-        time.sleep(2)
+        time.sleep(3)
         bet = await parse_surebet(json_data)
         json_data = await get_surebet_pari("soccer")
     return bet
