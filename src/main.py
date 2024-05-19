@@ -5,6 +5,7 @@ from fastapi import HTTPException
 
 from src.config import rd
 from src.logger import setup_logging
+from src.bots.router import router as router_bots
 from src.parser.oddscorp_arbs import get_surebet, cache_arbs
 from src.parser.oddscorp_websocket import read_odds_socket
 from src.parser.schemas import Bet
@@ -39,4 +40,6 @@ async def get_arbs():
 @app.get("/update_coefs/")
 async def update_coefs():
     return "update coefs websocket"
+
+app.include_router(router_bots)
 
