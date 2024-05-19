@@ -1,9 +1,10 @@
 import aiohttp
+import asyncio
 import logging
 import time
 import json
 
-from src.config import odd_token
+from src.config import odd_token, rd
 from src.parser.utils import calculate_arb
 
 logger = logging.getLogger(__name__)
@@ -116,3 +117,28 @@ async def get_surebet():
         bet = await parse_surebet(json_data)
         json_data = await get_surebet_pari("soccer")
     return bet
+
+async def get_surebettest():
+    return "result", "bet_type", "link", 1.5, 2.5, "bet_id", "mirror_res", "match_name"
+
+
+async def cache_arbs():
+    while True:
+        result, bet_type, link, koef, koef2, bet_id, mirror_res, match_name = await get_surebettest()
+        logger.info(f"Data: {result, bet_type, link, koef, koef2, bet_id, mirror_res, match_name}")
+
+        data = {
+            "result": result,
+            "bet_type": bet_type,
+            "link": link,
+            "koef": koef,
+            "koef2": koef2,
+            "bet_id": bet_id,
+            "mirror_res": mirror_res,
+            "match_name": match_name
+        }
+
+        rd.hset("last_arb", mapping=data)
+
+        await asyncio.sleep(3)
+
