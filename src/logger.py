@@ -9,6 +9,8 @@ def setup_logging():
                             logging.StreamHandler(),
                             logging.FileHandler("app.log", mode='a')
                         ])
+    logging.getLogger("requests").setLevel(logging.WARNING)
+    logging.getLogger("websockets").setLevel(logging.WARNING)
 
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)

@@ -23,7 +23,7 @@ async def read_odds_socket():
     ) as websocket:
         await websocket.send(message)
         async for msg in websocket:
-            logger.debug(msg)
-            await save_message(msg)
+            data = orjson.loads(msg)
+            await save_message(data)
 
 
