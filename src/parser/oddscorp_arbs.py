@@ -138,7 +138,7 @@ async def cache_arbs():
             "match_name": match_name
         }
 
-        rd.hset("last_arb", mapping=data)
+        await rd.hset("last_arb", mapping=data)
 
         await asyncio.sleep(3)
 

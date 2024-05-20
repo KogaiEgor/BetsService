@@ -25,7 +25,7 @@ async def startup_event():
 
 @app.get("/arbs/", response_model=List[Bet])
 async def get_arbs():
-    arb = rd.hgetall("last_arb")
+    arb = await rd.hgetall("last_arb")
     if not arb:
         return []
 
