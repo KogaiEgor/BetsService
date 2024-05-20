@@ -3,7 +3,7 @@ import websockets
 import logging
 
 from src.config import odd_token
-from src.parser.service import save_message
+from src.parser.service import KoefsHandler
 
 
 config = {
@@ -24,6 +24,7 @@ async def read_odds_socket():
         await websocket.send(message)
         async for msg in websocket:
             data = orjson.loads(msg)
-            await save_message(data)
+            handler = KoefsHandler(data)
+            await handler.save_message()
 
 
