@@ -3,6 +3,8 @@ import websockets
 import logging
 
 from src.config import odd_token
+from src.parser.service import save_message
+
 
 config = {
     "cmd": "subscribe",
@@ -22,5 +24,6 @@ async def read_odds_socket():
         await websocket.send(message)
         async for msg in websocket:
             logger.debug(msg)
+            await save_message(msg)
 
 
