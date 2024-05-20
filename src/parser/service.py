@@ -1,4 +1,5 @@
 import logging
+import orjson
 from src.config import rd
 
 
@@ -18,8 +19,9 @@ class KoefsHandler:
         return False
 
     async def __cache_koefs(self):
-        self.logger.debug(f"Get data for caching {self.markets}")
-        # caching logic
+        self.logger.debug(f"Cache data with key {self.match_id} and data {self.markets}")
+        serialized_data = orjson.dumps(self.markets)
+        await rd.hset(self.match_id, mapping={"markets": serialized_data})
         return self.markets
 
     async def save_message(self):
