@@ -37,9 +37,14 @@ async def get_arbs():
     return [Bet(**decoded_arb)]
 
 
-@app.get("/update_coefs/")
-async def update_coefs():
-    return "update coefs websocket"
+@app.get("/update_koefs/")
+async def update_koefs(match_id: str):
+    koefs = await rd.hgetall(match_id)
+    logger.debug(koefs)
+    decoded_koef = {key.decode('utf-8'): value.decode('utf-8') for key, value in koefs.items()}
+    logger.debug(decoded_koef)
+    return [decoded_koef]
+
 
 app.include_router(router_bots)
 
