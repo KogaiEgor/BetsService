@@ -12,6 +12,7 @@ config = {
     "needed_bk": ["parimatch_com:live"],
     "send_events_ids": True,
     "needed_sport": ["soccer"],
+    "short_format": True
 }
 message = orjson.dumps(config)
 
