@@ -35,7 +35,8 @@ class KoefsHandler:
 
     async def delete_match(self, match_id):
         try:
-            rd.delete(match_id)
+            self.logger.debug(f"Trying to delete event with id {match_id}")
+            await rd.delete(match_id)
             return
         except:
             return
