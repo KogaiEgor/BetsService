@@ -1,4 +1,5 @@
 import asyncio
+import orjson
 from typing import List
 from fastapi import FastAPI
 from fastapi import HTTPException
@@ -38,12 +39,14 @@ async def get_arbs():
 
 
 @app.get("/update_koefs/")
-async def update_koefs(match_id: str):
+async def update_koefs(match_id: str, market: str):
     koefs = await rd.hgetall(match_id)
-    logger.debug(koefs)
     decoded_koef = {key.decode('utf-8'): value.decode('utf-8') for key, value in koefs.items()}
+    markets = orjson.loads(decoded_koef['markets'])
     logger.debug(decoded_koef)
-    return [decoded_koef]
+    for i in markets:
+        if i[0] == market:
+            return [i]
 
 
 app.include_router(router_bots)
