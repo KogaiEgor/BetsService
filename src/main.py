@@ -53,5 +53,6 @@ async def update_koefs(match_id: str, market: str, response: Response):
     response.status_code = status.HTTP_400_BAD_REQUEST
     return {'msg': f"No market {market} in match {match_id}"}
 
+
 app.include_router(router_bots)
 

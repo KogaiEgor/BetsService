@@ -16,6 +16,8 @@ class KoefsHandler:
             self.match_id = self.msg[2]
             self.markets = self.msg[-1]
             return True
+        elif isinstance(self.msg, list) and len(self.msg) > 1 and self.msg[1] == "remove_event":
+            await self.delete_match(self.msg[2])
         return False
 
     async def __cache_koefs(self):
@@ -30,3 +32,10 @@ class KoefsHandler:
             return True
         return False
 
+
+    async def delete_match(self, match_id):
+        try:
+            rd.delete(match_id)
+            return
+        except:
+            return
