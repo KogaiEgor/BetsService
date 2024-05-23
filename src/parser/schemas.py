@@ -11,3 +11,7 @@ class Bet(BaseModel):
     mirror_res: str
     match_name: str
 
+
+class Market(BaseModel):
+    market: float
+
