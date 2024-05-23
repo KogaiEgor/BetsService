@@ -5,7 +5,7 @@ import websockets
 import logging
 
 from src.config import odd_token
-from src.parser.service import KoefsHandler
+from src.arbs.service import KoefsHandler
 
 
 config = {

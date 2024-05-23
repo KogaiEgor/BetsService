@@ -5,7 +5,7 @@ import time
 import json
 
 from src.config import odd_token, rd
-from src.parser.utils import calculate_arb
+from src.arbs.utils import calculate_arb
 
 logger = logging.getLogger(__name__)
 async def get_surebet_pari(sport):
