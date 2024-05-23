@@ -49,7 +49,7 @@ async def update_koefs(match_id: str, market: str, response: Response):
     logger.debug(decoded_koef)
     for i in markets:
         if i[0] == market:
-            return [i]
+            return {market: float(i[2])}
     response.status_code = status.HTTP_400_BAD_REQUEST
     return {'msg': f"No market {market} in match {match_id}"}
 
