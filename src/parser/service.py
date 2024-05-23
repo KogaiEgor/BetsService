@@ -32,11 +32,13 @@ class KoefsHandler:
             return True
         return False
 
-
     async def delete_match(self, match_id):
         try:
             self.logger.debug(f"Trying to delete event with id {match_id}")
             await rd.delete(match_id)
-            return
-        except:
-            return
+            self.logger.debug(f"Event with id {match_id} successfully deleted")
+        except KeyError:
+            self.logger.error(f"Event with id {match_id} not found in cache")
+        except Exception as e:
+            self.logger.error(f"Failed to delete event with id {match_id}: {e}")
+
