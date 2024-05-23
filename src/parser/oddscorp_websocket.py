@@ -27,6 +27,9 @@ async def read_odds_socket():
         await websocket.send(message)
         async for msg in websocket:
             data = orjson.loads(msg)
+            # if isinstance(data, list) and len(data) > 1 and (data[1] in ("update_markets", "remove_event", "remove_markets")):
+            #     print(msg)
+
             handler = KoefsHandler(data)
             await handler.save_message()
 
