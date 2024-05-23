@@ -1,3 +1,5 @@
+import asyncio
+
 import orjson
 import websockets
 import logging
@@ -27,5 +29,4 @@ async def read_odds_socket():
             data = orjson.loads(msg)
             handler = KoefsHandler(data)
             await handler.save_message()
-
 

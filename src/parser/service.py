@@ -24,6 +24,7 @@ class KoefsHandler:
         self.logger.debug(f"Cache data with key {self.match_id} and data {self.markets}")
         serialized_data = orjson.dumps(self.markets)
         await rd.hset(self.match_id, mapping={"markets": serialized_data})
+        await rd.expire(self.match_id, 480)
         return self.markets
 
     async def save_message(self):
@@ -41,4 +42,5 @@ class KoefsHandler:
             self.logger.error(f"Event with id {match_id} not found in cache")
         except Exception as e:
             self.logger.error(f"Failed to delete event with id {match_id}: {e}")
+
 
