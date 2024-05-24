@@ -118,27 +118,3 @@ async def get_surebet():
         json_data = await get_surebet_pari("soccer")
     return bet
 
-async def get_surebettest():
-    return "result", "bet_type", "link", 1.5, 2.5, "bet_id", "mirror_res", "match_name"
-
-
-async def cache_arbs():
-    while True:
-        result, bet_type, link, koef, koef2, bet_id, mirror_res, match_name = await get_surebettest()
-        logger.info(f"Data: {result, bet_type, link, koef, koef2, bet_id, mirror_res, match_name}")
-
-        data = {
-            "result": result,
-            "bet_type": bet_type,
-            "link": link,
-            "koef": koef,
-            "koef2": koef2,
-            "bet_id": bet_id,
-            "mirror_res": mirror_res,
-            "match_name": match_name
-        }
-
-        await rd.hset("last_arb", mapping=data)
-
-        await asyncio.sleep(3)
-

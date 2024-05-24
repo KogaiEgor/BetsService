@@ -5,7 +5,7 @@ from src.logger import setup_logging
 from src.market.router import router as router_market
 from src.market.oddscorp_websocket import read_odds_socket
 from src.arbs.router import router as router_arbs
-from src.arbs.oddscorp_arbs import cache_arbs
+from src.arbs.service import cache_arbs
 
 
 app = FastAPI(
