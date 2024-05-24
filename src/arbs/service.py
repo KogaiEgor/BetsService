@@ -2,17 +2,24 @@ import logging
 import asyncio
 
 from src.config import rd
-from src.arbs.oddscorp_arbs import get_surebet
+from src.arbs.oddscorp_arbs import get_surebet, ArbsOddHadler
 
 
 logger = logging.getLogger(__name__)
 async def get_surebettest():
     return "result", "bet_type", "link", 1.5, 2.5, "bet_id", "mirror_res", "match_name"
 
+async def test():
+    return None
 
 async def cache_arbs():
     while True:
-        result, bet_type, link, koef, koef2, bet_id, mirror_res, match_name = await get_surebet()
+        data = await ArbsOddHadler().run()
+        if data is None:
+            await asyncio.sleep(2)
+            continue
+        result, bet_type, link, koef, koef2, bet_id, mirror_res, match_name = data
+
         logger.info(f"Data: {result, bet_type, link, koef, koef2, bet_id, mirror_res, match_name}")
 
         data = {
@@ -27,6 +34,5 @@ async def cache_arbs():
         }
 
         await rd.hset("last_arb", mapping=data)
-
         await asyncio.sleep(3)
 
