@@ -18,7 +18,7 @@ async def cache_arbs():
             continue
         result, bet_type, link, koef, koef2, bet_id, mirror_res, match_name = data
 
-        logger.info(f"Data: {result, bet_type, link, koef, koef2, bet_id, mirror_res, match_name}")
+        logger.info(f"Get arbs data: {result, bet_type, link, koef, koef2, bet_id, mirror_res, match_name}")
 
         data = {
             "result": result,
@@ -32,6 +32,6 @@ async def cache_arbs():
         }
 
         await rd.hset("last_arb", mapping=data)
-        await rd.expire("last_arb", 480)
+        await rd.expire("last_arb", 15)
         await asyncio.sleep(3)
 
