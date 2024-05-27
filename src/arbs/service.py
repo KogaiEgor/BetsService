@@ -9,8 +9,6 @@ logger = logging.getLogger(__name__)
 async def get_surebettest():
     return "result", "bet_type", "link", 1.5, 2.5, "bet_id", "mirror_res", "match_name"
 
-async def test():
-    return None
 
 async def cache_arbs():
     while True:
@@ -34,5 +32,6 @@ async def cache_arbs():
         }
 
         await rd.hset("last_arb", mapping=data)
+        await rd.expire("last_arb", 480)
         await asyncio.sleep(3)
 
