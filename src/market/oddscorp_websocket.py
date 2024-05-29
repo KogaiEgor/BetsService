@@ -30,14 +30,15 @@ async def read_odds_socket():
                 data = orjson.loads(msg)
                 # if isinstance(data, list) and len(data) > 1 and (data[1] in ("update_markets", "remove_event", "remove_markets")):
                 #     print(msg)
-                logger.debug(f" Websocket {msg}")
+                #logger.debug(f" Websocket {msg}")
                 if isinstance(data, dict):
                     if 'last_delay_100avg' in data.keys():
                         logger.info(F"PING = {data}")
                         if data['last_delay_100avg'] > 100:
                             logger.warning("Ping exceeded 100ms, reconnecting...")
                             await asyncio.sleep(1)
+                            logger.info("Websocket connection reloaded")
                             break
                 handler = KoefsHandler(data)
                 await handler.save_message()
-
+        logger.info("Websocket connection reloaded")
