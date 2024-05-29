@@ -33,6 +33,10 @@ async def read_odds_socket():
             if isinstance(data, dict):
                 if 'last_delay_100avg' in data.keys():
                     logger.info(F"PING = {data}")
+                    if data['last_delay_100avg'] > 100:
+                        logger.warning("Ping exceeded 100ms, reconnecting...")
+                        await asyncio.sleep(1)
+                        break
             handler = KoefsHandler(data)
             await handler.save_message()
 
