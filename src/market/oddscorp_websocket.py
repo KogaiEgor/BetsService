@@ -39,6 +39,9 @@ async def read_odds_socket():
                             await asyncio.sleep(1)
                             logger.info("Websocket connection reloaded")
                             break
-                handler = KoefsHandler(data)
-                await handler.save_message()
+                try:
+                    handler = KoefsHandler(data)
+                    await handler.save_message()
+                except:
+                    logger.error(f"Error saving {msg}")
         logger.info("Websocket connection reloaded")
