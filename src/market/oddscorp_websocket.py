@@ -3,6 +3,7 @@ import asyncio
 import orjson
 import websockets
 import logging
+from websockets.exceptions import ConnectionClosedError, ConnectionClosedOK
 
 from src.config import odd_token
 from src.market.service import KoefsHandler
@@ -27,21 +28,34 @@ async def read_odds_socket():
         ) as websocket:
             await websocket.send(message)
             async for msg in websocket:
-                data = orjson.loads(msg)
-                # if isinstance(data, list) and len(data) > 1 and (data[1] in ("update_markets", "remove_event", "remove_markets")):
-                #     print(msg)
-                #logger.debug(f" Websocket {msg}")
-                if isinstance(data, dict):
-                    if 'last_delay_100avg' in data.keys():
-                        logger.info(F"PING = {data}")
+                try:
+                    msg = await asyncio.wait_for(websocket.recv(), timeout=60)
+                    data = orjson.loads(msg)
+                    if isinstance(data, dict) and 'last_delay_100avg' in data.keys():
+                        logger.info(f"PING = {data}")
                         if data['last_delay_100avg'] > 100:
                             logger.warning("Ping exceeded 100ms, reconnecting...")
-                            await asyncio.sleep(1)
-                            logger.info("Websocket connection reloaded")
                             break
+                    handler = KoefsHandler(data)
+                    await handler.save_message()
+                except asyncio.TimeoutError:
+                    logger.warning("Timeout on receiving message. Reconnecting...")
+                    break
+                except ConnectionClosedError as e:
+                    logger.warning(f"Connection closed with error: {e}. Reconnecting...")
+                    break
+                except ConnectionResetError as e:
+                    logger.warning(f"Connection reset error: {e}. Reconnecting...")
+                    break
+                except websockets.ConnectionClosedOK:
+                    logger.info("Connection closed normally. Reconnecting...")
+                    break
+                except Exception as e:
+                    logger.error(f"Unexpected error: {e}")
+                    break
                 try:
                     handler = KoefsHandler(data)
                     await handler.save_message()
-                except:
-                    logger.error(f"Error saving {msg}")
+                except Exception as e:
+                    logger.error(f"Error saving {msg}", exc_info=e)
         logger.info("Websocket connection reloaded")
