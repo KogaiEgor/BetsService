@@ -2,7 +2,7 @@ import logging
 import asyncio
 
 from src.config import rd
-from src.arbs.oddscorp_arbs import get_surebet, ArbsOddHadler
+from src.arbs.oddscorp_arbs import ArbsOddHadler
 
 
 logger = logging.getLogger(__name__)
@@ -32,6 +32,6 @@ async def cache_arbs():
         }
 
         await rd.hset("last_arb", mapping=data)
-        await rd.expire("last_arb", 15)
+        await rd.expire("last_arb", 9)
         await asyncio.sleep(3)
 
