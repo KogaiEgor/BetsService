@@ -49,12 +49,12 @@ class ArbsOddHadler:
 
         for match in self.data:
             if "Esports" in match["BK1_game"] and "8 mins" in match["BK1_league"]:
-                self.logger.debug(f"Get Esports data BK1: {orjson.dumps(self.data)}")
+                # self.logger.debug(f"Get Esports data BK1: {orjson.dumps(self.data)}")
                 self.betka = 'BK1'
                 self.pari = 'BK2'
                 self.match = match
             elif "Esports" in match["BK2_game"] and "8 mins" in match["BK2_league"]:
-                self.logger.debug(f"Get Esports data BK2: {orjson.dumps(self.data)}")
+                # self.logger.debug(f"Get Esports data BK2: {orjson.dumps(self.data)}")
                 self.betka = 'BK2'
                 self.pari = 'BK1'
                 self.match = match
