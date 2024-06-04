@@ -26,7 +26,8 @@ class KoefsHandler:
 
 
     async def __cache_koefs(self):
-        self.logger.debug(f"Cache data with key {self.match_id} and data {self.markets}")
+        # self.logger.debug(f"Cache data with key {self.match_id} and data {self.markets}")
+        self.logger.debug(f"Cache data")
         serialized_data = orjson.dumps(self.markets)
         await rd.hset(self.match_id, mapping={"markets": serialized_data})
         await rd.expire(self.match_id, 480)
