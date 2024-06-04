@@ -30,6 +30,10 @@ async def read_odds_socket():
             async for msg in websocket:
                 try:
                     msg = await asyncio.wait_for(websocket.recv(), timeout=60)
+                    if msg is None:
+                        logger.warning("None received from odd")
+                        break
+                        
                     data = orjson.loads(msg)
                     if isinstance(data, dict) and 'last_delay_100avg' in data.keys():
                         logger.info(f"PING = {data}")
