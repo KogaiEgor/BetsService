@@ -14,7 +14,7 @@ class ArbsOddHadler:
                         'token': odd_token,
                         'sport': 'soccer',
                         'bk2_name': 'bet365,parimatch_com',
-                        'min_fi': 0
+                        'min_fi': 4
                     }
         self.url = 'http://api.oddscp.com:8111/forks'
         self.betka = ''
