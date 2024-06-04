@@ -33,7 +33,7 @@ async def read_odds_socket():
                     if msg is None:
                         logger.warning("None received from odd")
                         break
-                        
+
                     data = orjson.loads(msg)
                     if isinstance(data, dict) and 'last_delay_100avg' in data.keys():
                         logger.info(f"PING = {data}")

@@ -68,7 +68,7 @@ class KoefsHandler:
             if market[0] not in remove_markets:
                 updated_markets.append(market)
 
-        self.markets = markets
-        self.logger.debug(f"Trying to save new markets {markets}")
+        self.markets = updated_markets
+        self.logger.debug(f"Trying to save new markets")
         await self.__cache_koefs()
 
