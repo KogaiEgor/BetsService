@@ -3,7 +3,7 @@ import asyncio
 import orjson
 import websockets
 import logging
-from websockets.exceptions import ConnectionClosedError, ConnectionClosedOK
+from websockets.exceptions import ConnectionClosedError, ConnectionClosedOK, InvalidMessage
 
 from src.config import odd_token
 from src.market.service import KoefsHandler
@@ -53,6 +53,9 @@ async def read_odds_socket():
                     break
                 except websockets.ConnectionClosedOK:
                     logger.info("Connection closed normally. Reconnecting...")
+                    break
+                except InvalidMessage as e:
+                    logger.error(f"Invalid message received: {e}. Reconnecting...")
                     break
                 except Exception as e:
                     logger.error(f"Unexpected error: {e}")
