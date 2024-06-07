@@ -92,10 +92,10 @@ class ArbsOddHadler:
     async def run(self):
         await self.get_arbs_from_odd()
         await self.parse_data()
-        await asyncio.sleep(3)
+        await asyncio.sleep(1)
         while self.data or self.match is None:
             await self.get_arbs_from_odd()
             await self.parse_data()
-            await asyncio.sleep(3)
+            await asyncio.sleep(1)
         return await self.process_match()
 
