@@ -68,6 +68,6 @@ async def read_odds_socket():
                     except Exception as e:
                         logger.error(f"Error saving {msg}", exc_info=e)
         except Exception as e:
-            logger.error(f"ERROR ERROR ERROR ERROR " , exc_info=e)
-        await asyncio.sleep(5)
+            logger.error(f"ERROR ERROR ERROR ERROR ", exc_info=e)
+        await asyncio.sleep(2)
         logger.info("Websocket connection reloaded")
