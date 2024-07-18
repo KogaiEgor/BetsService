@@ -59,7 +59,7 @@ class ArbsOddHadler:
                 self.pari = 'BK1'
                 self.match = match
 
-        logger.debug("No arbs more than 4% or no value on pari")
+        logger.debug("No arbs more than 3.5% or no value on pari")
 
     async def create_link(self):
         try:
