@@ -14,7 +14,7 @@ class ArbsOddHadler:
                         'token': odd_token,
                         'sport': 'soccer',
                         'bk2_name': 'bet365,parimatch_com',
-                        'min_fi': 3.5
+                        'min_fi': 4
                     }
         self.url = 'http://api.oddscp.com:8111/forks'
         self.betka = ''
@@ -59,7 +59,7 @@ class ArbsOddHadler:
                 self.pari = 'BK1'
                 self.match = match
 
-        logger.debug("No arbs more than 3.5% or no value on pari")
+        logger.debug("No arbs more than 4% or no value on pari")
 
     async def create_link(self):
         try:
