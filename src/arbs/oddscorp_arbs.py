@@ -10,8 +10,11 @@ from src.arbs.utils import calculate_arb
 logger = logging.getLogger(__name__)
 class ArbsOddHadler:
     def __init__(self):
+        bet_types = "WIN,TOTALS,TEAM_TOTALS,HALF_TEAM_TOTALS,HALF_TOTALS,HANDICAP,HANDICAP_3W,HALF_HANDICAP," \
+                    "SET_TEAMS_TO_SCORE,HALF_TEAMS_TO_SCORE,"
         self.params = {
                         'token': odd_token,
+                        'bet_type': bet_types,
                         'sport': 'soccer',
                         'bk2_name': 'bet365,parimatch_com',
                         'min_fi': 4
