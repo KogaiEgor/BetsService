@@ -52,21 +52,16 @@ class ArbsOddHadler:
             self.logger.error("Error occurred, None received")
             return None
 
-        self.logger.debug("parse data func")
         self.logger.debug(self.data)
         alive_arb = float('inf')
         for match in self.data:
-            self.logger.debug(f"\nmatch['BK1_game'] = {match['BK1_game']}\nmatch['BK1_league'] = {match['BK1_league']}\n"
-                              f"match['BK2_game'] = {match['BK2_game']}\nmatch['BK2_league'] = {match['BK2_league']}")
             if "Esports" in match["BK1_game"] and "8 mins" in match["BK1_league"]:
-                # self.logger.debug(f"Get Esports data BK1: {orjson.dumps(self.data)}")
                 if match["alive_sec"] < alive_arb:
                     self.betka = 'BK1'
                     self.pari = 'BK2'
                     self.match = match
                     alive_arb = match["alive_sec"]
             elif "Esports" in match["BK2_game"] and "8 mins" in match["BK2_league"]:
-                # self.logger.debug(f"Get Esports data BK2: {orjson.dumps(self.data)}")
                 if match["alive_sec"] < alive_arb:
                     self.betka = 'BK2'
                     self.pari = 'BK1'
