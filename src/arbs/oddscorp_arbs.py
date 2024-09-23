@@ -6,14 +6,16 @@ import orjson
 
 from src.config import odd_token, rd
 from src.arbs.utils import calculate_arb
+from src.logger import setup_logging
 
-logger = logging.getLogger(__name__)
+
+logger = setup_logging()
 class ArbsOddHadler:
     def __init__(self):
         bet_types = "WIN,TOTALS,TEAM_TOTALS,HALF_TEAM_TOTALS,HALF_TOTALS,HANDICAP,HANDICAP_3W,HALF_HANDICAP," \
                     "SET_TEAMS_TO_SCORE,HALF_TEAMS_TO_SCORE,"
         self.params = {
-                        'token': odd_token,
+                        'token': "e5c4b46bb56beaf835f1bc518dd2b484",
                         'bet_type': bet_types,
                         'sport': 'soccer',
                         'bk2_name': 'bet365,parimatch_com',
@@ -50,17 +52,26 @@ class ArbsOddHadler:
             self.logger.error("Error occurred, None received")
             return None
 
+        self.logger.debug("parse data func")
+        self.logger.debug(self.data)
+        alive_arb = float('inf')
         for match in self.data:
+            self.logger.debug(f"\nmatch['BK1_game'] = {match['BK1_game']}\nmatch['BK1_league'] = {match['BK1_league']}\n"
+                              f"match['BK2_game'] = {match['BK2_game']}\nmatch['BK2_league'] = {match['BK2_league']}")
             if "Esports" in match["BK1_game"] and "8 mins" in match["BK1_league"]:
                 # self.logger.debug(f"Get Esports data BK1: {orjson.dumps(self.data)}")
-                self.betka = 'BK1'
-                self.pari = 'BK2'
-                self.match = match
+                if match["alive_sec"] < alive_arb:
+                    self.betka = 'BK1'
+                    self.pari = 'BK2'
+                    self.match = match
+                    alive_arb = match["alive_sec"]
             elif "Esports" in match["BK2_game"] and "8 mins" in match["BK2_league"]:
                 # self.logger.debug(f"Get Esports data BK2: {orjson.dumps(self.data)}")
-                self.betka = 'BK2'
-                self.pari = 'BK1'
-                self.match = match
+                if match["alive_sec"] < alive_arb:
+                    self.betka = 'BK2'
+                    self.pari = 'BK1'
+                    self.match = match
+                    alive_arb = match["alive_sec"]
 
         logger.debug("No arbs more than 4% or no value on pari")
 
@@ -102,3 +113,9 @@ class ArbsOddHadler:
             await asyncio.sleep(1)
         return await self.process_match()
 
+
+async def main():
+    await ArbsOddHadler().run()
+
+if __name__ == "__main__":
+    asyncio.run(main())
