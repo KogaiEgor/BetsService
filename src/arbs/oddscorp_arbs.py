@@ -110,9 +110,9 @@ class ArbsOddHadler:
         return await self.process_match()
 
 
-async def main():
-    await ArbsOddHadler().run()
-
-if __name__ == "__main__":
-    asyncio.run(main())
-
+# async def main():
+#     await ArbsOddHadler().run()
+#
+# if __name__ == "__main__":
+#     asyncio.run(main())
+#
