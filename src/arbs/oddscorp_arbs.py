@@ -73,7 +73,7 @@ class ArbsOddHadler:
                     self.match = match
                     alive_arb = match["alive_sec"]
 
-        logger.debug("No arbs more than 4% or no value on pari")
+        self.logger.debug("No arbs more than 4% or no value on pari")
 
     async def create_link(self):
         try:
@@ -91,7 +91,7 @@ class ArbsOddHadler:
         koef_pari = self.match[f"{self.pari}_cf"]
         self.logger.debug(f"bet365: {koef_betka} pari: {koef_pari}")
         arb = calculate_arb(koef_betka, koef_pari)
-        if arb >= 0.01:
+        if arb >= 0.0396:
             await self.create_link()
             match_name = self.match[f'{self.betka}_game']
             bet_id = self.match[f'{self.pari}_event_id']
@@ -107,7 +107,7 @@ class ArbsOddHadler:
         await self.get_arbs_from_odd()
         await self.parse_data()
         await asyncio.sleep(1)
-        while self.data or self.match is None:
+        while self.data is None or self.match is None:
             await self.get_arbs_from_odd()
             await self.parse_data()
             await asyncio.sleep(1)
@@ -119,3 +119,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
