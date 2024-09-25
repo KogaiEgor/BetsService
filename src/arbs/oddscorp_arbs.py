@@ -15,7 +15,7 @@ class ArbsOddHadler:
         bet_types = "WIN,TOTALS,TEAM_TOTALS,HALF_TEAM_TOTALS,HALF_TOTALS,HANDICAP,HANDICAP_3W,HALF_HANDICAP," \
                     "SET_TEAMS_TO_SCORE,HALF_TEAMS_TO_SCORE,"
         self.params = {
-                        'token': "e5c4b46bb56beaf835f1bc518dd2b484",
+                        'token': odd_token,
                         'bet_type': bet_types,
                         'sport': 'soccer',
                         'bk2_name': 'bet365,parimatch_com',
