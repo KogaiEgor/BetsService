@@ -56,12 +56,12 @@ class ValuesOddHandler(BaseOddHandler):
         return data
 
 
-async def main():
-    res = await ValuesOddHandler().run()
-    print(res)
-
-if __name__ == "__main__":
-    asyncio.run(main())
+# async def main():
+#     res = await ValuesOddHandler().run()
+#     print(res)
+#
+# if __name__ == "__main__":
+#     asyncio.run(main())
 
 
 
