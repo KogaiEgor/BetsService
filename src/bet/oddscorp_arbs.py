@@ -59,8 +59,8 @@ class ArbsOddHandler(BaseOddHandler):
                 "result": self.match[f"{self.betka}_bet"],
                 "bet_type": "Arb",
                 "link": self.link,
-                "koef_betka": koef_betka,
-                "koef_pari": koef_pari,
+                "koef": koef_betka,
+                "koef2": koef_pari,
                 "bet_id": self.match[f"{self.pari}_event_id"],
                 "mirror_res": self.match[f"{self.pari}_bet"],
                 "match_name": self.match[f'{self.betka}_game']
