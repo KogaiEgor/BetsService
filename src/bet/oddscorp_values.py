@@ -18,17 +18,21 @@ class ValuesOddHandler(BaseOddHandler):
             }
         )
 
+
     async def filter_data(self):
         if self.data is None:
             self.logger.error("Error, none received")
 
         flag = False
         for value in self.data:
+            koef = value['BK1_cf']
             cfs = value['valuing_data']['cfs']
-            for cf in cfs:
-                if cf == "PIN":
-                    self.match = value
-                    flag = True
+            for bk_name, bk_data in cfs.items():
+                if bk_name == "PIN":
+                    value_per = abs(float(bk_data[0]) - koef) * 100
+                    if value_per >= 6:
+                        self.match = value
+                        flag = True
                     break
 
             if flag == True:
@@ -62,8 +66,6 @@ class ValuesOddHandler(BaseOddHandler):
 #
 # if __name__ == "__main__":
 #     asyncio.run(main())
-
-
 
 
 
