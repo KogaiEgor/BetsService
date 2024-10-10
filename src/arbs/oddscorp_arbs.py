@@ -93,11 +93,12 @@ class ArbsOddHadler:
             bet_id = self.match[f'{self.pari}_event_id']
             result = self.match[f"{self.betka}_bet"]
             mirror_res = self.match[f"{self.pari}_bet"]
-            bet_type = self.match["bet_type"]
+            bet_type = "Arb"
             koef = self.match[f"{self.betka}_cf"]
             self.logger.debug(f"Get match data {result, bet_type, self.link, koef}")
             return result, bet_type, self.link, koef_betka, koef_pari, bet_id, mirror_res, match_name
         return None
+
 
     async def run(self):
         await self.get_arbs_from_odd()
