@@ -15,7 +15,8 @@ class ValuesOddHandler:
         self.params = {
             "token": odd_token,
             "bk_name": "bet365",
-            "get_market_data": 2
+            "get_market_data": 2,
+            "min_fi": 6
         }
         self.url = "http://api.oddscp.com:8111/valuebets"
         self.logger = setup_logging()
@@ -77,9 +78,10 @@ class ValuesOddHandler:
         result = self.match[f"BK1_bet"]
         bet_type = "Valuebet"
         koef = self.match[f"BK1_cf"]
+        koef2 = float(self.match["valuing_data"]["cfs"]["PIN"][0])
         link = self.link
 
-        return result, bet_type, link, koef, 0, bet_id, 0, match_name
+        return result, bet_type, link, koef, koef2, bet_id, 0, match_name
 
 
     async def run(self):
