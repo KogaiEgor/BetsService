@@ -10,7 +10,7 @@ async def get_surebettest():
     return "result", "bet_type", "link", 1.5, 2.5, "bet_id", "mirror_res", "match_name"
 
 
-async def cache_arbs():
+async def cache_values():
     while True:
         data = await ArbsOddHadler().run()
         if data is None:
@@ -31,7 +31,7 @@ async def cache_arbs():
             "match_name": match_name
         }
 
-        await rd.hset("last_arb", mapping=data)
-        await rd.expire("last_arb", 9)
+        await rd.hset("last_value", mapping=data)
+        await rd.expire("last_value", 9)
         await asyncio.sleep(3)
 
