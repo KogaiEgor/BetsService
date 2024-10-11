@@ -39,7 +39,7 @@ class ValuesOddHandler(BaseOddHandler):
                 break
 
         if self.match is None:
-            self.logger.debug("No values for bet365 and pinnacle")
+            self.logger.debug("No values more 6% on pinnacle")
 
 
     async def process_match(self):
