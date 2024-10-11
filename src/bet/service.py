@@ -60,7 +60,7 @@ async def cache_bet(handler):
         await rd.hset(hash_name, mapping=data)
         logger.debug(f"Saved hash")
         await rd.expire(hash_name, 9)
-        break
+
 
 
 async def get_cache():
