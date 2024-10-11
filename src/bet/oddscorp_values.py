@@ -2,6 +2,7 @@ import json
 import asyncio
 
 from src.config import odd_token
+from src.bet.utils import calculate_value
 from src.bet.oddscorp_bet import BaseOddHandler
 
 
@@ -29,8 +30,7 @@ class ValuesOddHandler(BaseOddHandler):
             cfs = value['valuing_data']['cfs']
             for bk_name, bk_data in cfs.items():
                 if bk_name == "PIN":
-                    value_per = abs(float(bk_data[0]) - koef) * 100
-                    if value_per >= 6:
+                    if calculate_value(bk_data[0], koef) >= 6:
                         self.match = value
                         flag = True
                     break
