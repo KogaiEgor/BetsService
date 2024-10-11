@@ -10,7 +10,7 @@ def calculate_arb(koef1, koef2):
 
 
 def calculate_value(koef1, koef2):
-    value = (1/koef1) * 100 - (1/koef2) * 100
+    value = (1 / float(koef1)) * 100 - (1 / float(koef2)) * 100
     logger.debug(f"Actual value {value}")
     return value
 
