@@ -16,7 +16,7 @@ class ValuesOddHandler(BaseOddHandler):
                 "sport": "tennis,soccer,basketball",
                 "bk_name": "bet365",
                 "get_market_data": 2,
-                "min_fi": 6
+                "min_fi": 8
             }
         )
 
@@ -31,7 +31,7 @@ class ValuesOddHandler(BaseOddHandler):
             cfs = value['valuing_data']['cfs']
             for bk_name, bk_data in cfs.items():
                 if bk_name == "PIN":
-                    if calculate_value(bk_data[0], koef) >= 6:
+                    if calculate_value(bk_data[0], koef) >= 8:
                         self.match = value
                         flag = True
                     break
