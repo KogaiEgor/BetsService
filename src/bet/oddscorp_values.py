@@ -13,6 +13,7 @@ class ValuesOddHandler(BaseOddHandler):
             url="http://api.oddscp.com:8111/valuebets",
             params={
                 "token": odd_token,
+                "sport": "tennis,soccer,basketball",
                 "bk_name": "bet365",
                 "get_market_data": 2,
                 "min_fi": 6
