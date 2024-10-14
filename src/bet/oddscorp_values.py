@@ -27,6 +27,9 @@ class ValuesOddHandler(BaseOddHandler):
 
         flag = False
         for value in self.data:
+            if "ITF" in value['BK1_league']:
+                self.logger.debug("ITF league skipped")
+                break
             koef = value['BK1_cf']
             cfs = value['valuing_data']['cfs']
             for bk_name, bk_data in cfs.items():
@@ -61,12 +64,20 @@ class ValuesOddHandler(BaseOddHandler):
         return data
 
 
-# async def main():
-#     res = await ValuesOddHandler().run()
-#     print(res)
-#
-# if __name__ == "__main__":
-#     asyncio.run(main())
+async def main():
+    res = await ValuesOddHandler().run()
+    print(res)
+
+    # data = ["ITF women league", "LEgue women ITF fdsdf", "not itfleague", "Works ITF?", "Works ITF"]
+    # for i in data:
+    #     if "ITF" in i:
+    #         print("Bad")
+    #     else:
+    #         print(i)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
 
 
 
