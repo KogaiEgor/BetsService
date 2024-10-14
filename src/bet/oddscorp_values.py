@@ -64,20 +64,20 @@ class ValuesOddHandler(BaseOddHandler):
         return data
 
 
-async def main():
-    res = await ValuesOddHandler().run()
-    print(res)
-
-    # data = ["ITF women league", "LEgue women ITF fdsdf", "not itfleague", "Works ITF?", "Works ITF"]
-    # for i in data:
-    #     if "ITF" in i:
-    #         print("Bad")
-    #     else:
-    #         print(i)
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
+# async def main():
+#     res = await ValuesOddHandler().run()
+#     print(res)
+#
+#     # data = ["ITF women league", "LEgue women ITF fdsdf", "not itfleague", "Works ITF?", "Works ITF"]
+#     # for i in data:
+#     #     if "ITF" in i:
+#     #         print("Bad")
+#     #     else:
+#     #         print(i)
+#
+#
+# if __name__ == "__main__":
+#     asyncio.run(main())
 
 
 
