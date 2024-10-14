@@ -31,7 +31,7 @@ class ValuesOddHandler(BaseOddHandler):
             cfs = value['valuing_data']['cfs']
             for bk_name, bk_data in cfs.items():
                 if bk_name == "PIN":
-                    if calculate_value(bk_data[0], koef) >= 8:
+                    if calculate_value(bk_data[0], koef) >= 10:
                         self.match = value
                         flag = True
                     break
@@ -40,7 +40,7 @@ class ValuesOddHandler(BaseOddHandler):
                 break
 
         if self.match is None:
-            self.logger.debug("No values more 6% on pinnacle")
+            self.logger.debug("No values more 10% on pinnacle")
 
 
     async def process_match(self):
