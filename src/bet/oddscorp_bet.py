@@ -18,7 +18,7 @@ class BaseOddHandler(ABC):
 
 
     async def get_data_from_api(self):
-        self.logger.debug(self.params)
+        # self.logger.debug(self.params)
         async with aiohttp.ClientSession() as session:
             try:
                 async with session.get(self.url, params=self.params) as response:
