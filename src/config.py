@@ -5,5 +5,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-odd_token = os.environ.get("ODD_TOKEN")
+def load_config():
+    load_dotenv()
+
+odd_token = os.getenv("ODD_TOKEN")
 rd = aioredis.from_url("redis://localhost")
