@@ -20,7 +20,7 @@ logger = setup_logging()
 async def startup_event():
     load_config()
     asyncio.create_task(cache_bet(ValuesOddHandler))
-    asyncio.create_task(cache_bet(ArbsOddHandler))
+    # asyncio.create_task(cache_bet(ArbsOddHandler))
     asyncio.create_task(read_odds_socket())
 
 
