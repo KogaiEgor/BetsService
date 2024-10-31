@@ -3,6 +3,8 @@ from pydantic import BaseModel
 
 class Bet(BaseModel):
     result: str
+    sport: str
+    league: str
     bet_type: str
     link: str
     koef: float

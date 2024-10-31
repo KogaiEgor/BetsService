@@ -52,6 +52,8 @@ class ValuesOddHandler(BaseOddHandler):
 
         data = {
             "result": self.match["BK1_bet"],
+            "sport": self.match['sport'],
+            "league": self.match['BK1_league'],
             "bet_type": "Valuebet",
             "link": self.link,
             "koef": self.match["BK1_cf"],
